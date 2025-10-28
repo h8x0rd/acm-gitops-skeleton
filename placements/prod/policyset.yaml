@@ -1,0 +1,10 @@
+apiVersion: policy.open-cluster-management.io/v1beta1
+kind: PolicySet
+metadata:
+  name: policyset-prod-security
+  namespace: policies
+spec:
+  description: "Security + compliance baseline for prod"
+  policies:
+    - pol-disallow-privileged
+    - pol-require-namespace-label-owner

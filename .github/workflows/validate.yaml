@@ -1,0 +1,23 @@
+name: validate-kustomize
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install kustomize
+        run: |
+          curl -sLo kustomize.tar.gz https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv5.4.3/kustomize_v5.4.3_linux_amd64.tar.gz
+          tar -xzf kustomize.tar.gz
+          sudo mv kustomize /usr/local/bin/kustomize
+      - name: Build policies
+        run: kustomize build policies
+      - name: Build stage placement
+        run: kustomize build placements/stage
+      - name: Build prod placement
+        run: kustomize build placements/prod

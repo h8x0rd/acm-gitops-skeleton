@@ -1,0 +1,16 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: ConfigurationPolicy
+metadata:
+  name: cfg-require-namespace-label-owner
+spec:
+  remediationAction: inform
+  severity: medium
+  namespaceSelector:
+    include: ["*"]
+  object-templates-raw: |
+    {{range $i, $ns := (lookup "v1" "Namespace" "" "").items}}
+    {{- if not (hasKey $ns.metadata.labels "owner") -}}
+    {"complianceType":"musthave","objectDefinition":{
+      "apiVersion":"v1","kind":"Namespace","metadata":{"name":"{{$ns.metadata.name}}","labels":{"owner": "TBD"}}}}
+    {{- end -}}
+    {{end}}

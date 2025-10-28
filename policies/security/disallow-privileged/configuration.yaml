@@ -1,0 +1,20 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: ConfigurationPolicy
+metadata:
+  name: cfg-disallow-privileged
+spec:
+  remediationAction: enforce    # start with 'inform' for dry-runs
+  severity: high
+  namespaceSelector:
+    include: ["*"]
+    exclude: ["kube-*", "openshift-*"]
+  object-templates:
+    - complianceType: mustnothave
+      objectDefinition:
+        apiVersion: v1
+        kind: Pod
+        metadata: {}
+        spec:
+          containers:
+            - securityContext:
+                privileged: true

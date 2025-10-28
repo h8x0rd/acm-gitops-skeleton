@@ -1,0 +1,17 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: pg-security-privileged
+policyDefaults:
+  namespace: policies
+  remediationAction: enforce
+  severity: high
+  pruneObjectBehavior: DeleteIfCreated
+  policyAnnotations:
+    policy.open-cluster-management.io/standards: "NIST SP 800-53"
+    policy.open-cluster-management.io/categories: "SC System and Communications Protection"
+    policy.open-cluster-management.io/controls: "SC-7 Boundary Protection"
+policies:
+  - name: pol-disallow-privileged
+    manifests:
+      - path: configuration.yaml

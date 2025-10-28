@@ -1,0 +1,13 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: pg-compliance-namespace-label
+policyDefaults:
+  namespace: policies
+  remediationAction: inform
+  severity: medium
+  pruneObjectBehavior: DeleteIfCreated
+policies:
+  - name: pol-require-namespace-label-owner
+    manifests:
+      - path: configuration.yaml

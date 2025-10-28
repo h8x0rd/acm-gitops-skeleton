@@ -1,0 +1,10 @@
+apiVersion: policy.open-cluster-management.io/v1beta1
+kind: PolicySet
+metadata:
+  name: policyset-stage-security
+  namespace: policies
+spec:
+  description: "Security + compliance baseline for stage"
+  policies:
+    - pol-disallow-privileged
+    - pol-require-namespace-label-owner
